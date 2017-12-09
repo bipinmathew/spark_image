@@ -1,6 +1,9 @@
 FROM ubuntu
 ENV INSTALL_DIR=/usr/local/share
-RUN apt-get upgrade -y && apt-get update -y && apt-get install -y apt-transport-https software-properties-common python-software-properties curl python3 debconf-utils
+
+# install some essential build tools
+RUN apt-get upgrade -y && apt-get update -y && apt-get install -y apt-transport-https software-properties-common python-software-properties curl python3 debconf-utils net-tools iputils-ping python3-pip python-dev build-essential git
+RUN pip3 install --upgrade pip
 
 RUN add-apt-repository -y ppa:webupd8team/java
 # RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list 
@@ -22,3 +25,14 @@ RUN curl -L http://apache.claz.org/spark/spark-2.2.0/spark-2.2.0.tgz | tar zxf -
 RUN cd  $SPARK_HOME && sbt package
 
 ENV PATH=$PATH:$SPARK_HOME/bin
+
+# Install Jupyter notebooks.
+RUN pip3 install jupyter
+ADD start-notebook.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-notebook.sh 
+ENTRYPOINT ["/usr/local/bin/start-notebook.sh"]
+#RUN useradd -ms /bin/bash jupyter && chown jupyter:jupyter /home/jupyter
+#USER jupyter
+#WORKDIR /home/jupyter
+#RUN start-notebook.sh
+#RUN pip3 install --upgrade virtualenv
