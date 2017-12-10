@@ -25,9 +25,11 @@ RUN curl -L http://apache.claz.org/spark/spark-2.2.0/spark-2.2.0.tgz | tar zxf -
 RUN cd  $SPARK_HOME && sbt package
 
 ENV PATH=$PATH:$SPARK_HOME/bin
-ADD start-notebook.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start-notebook.sh 
-ENTRYPOINT ["/usr/local/bin/start-notebook.sh"]
+ADD start-spark.sh /usr/local/bin/
+ADD start-master.sh /usr/local/bin/
+ADD start-worker.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-spark.sh /usr/local/bin/start-master.sh /usr/local/bin/start-worker.sh 
+ENTRYPOINT ["/usr/local/bin/start-spark.sh"]
 
 # Install Jupyter notebooks.
 #RUN pip3 install jupyter
