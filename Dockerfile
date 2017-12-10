@@ -25,14 +25,17 @@ RUN curl -L http://apache.claz.org/spark/spark-2.2.0/spark-2.2.0.tgz | tar zxf -
 RUN cd  $SPARK_HOME && sbt package
 
 ENV PATH=$PATH:$SPARK_HOME/bin
-
-# Install Jupyter notebooks.
-RUN pip3 install jupyter
 ADD start-notebook.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start-notebook.sh 
 ENTRYPOINT ["/usr/local/bin/start-notebook.sh"]
-#RUN useradd -ms /bin/bash jupyter && chown jupyter:jupyter /home/jupyter
-#USER jupyter
-#WORKDIR /home/jupyter
-#RUN start-notebook.sh
-#RUN pip3 install --upgrade virtualenv
+
+# Install Jupyter notebooks.
+#RUN pip3 install jupyter
+#ADD start-notebook.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/start-notebook.sh 
+#ENTRYPOINT ["/usr/local/bin/start-notebook.sh"]
+##RUN useradd -ms /bin/bash jupyter && chown jupyter:jupyter /home/jupyter
+##USER jupyter
+##WORKDIR /home/jupyter
+##RUN start-notebook.sh
+##RUN pip3 install --upgrade virtualenv
