@@ -1,2 +1,3 @@
 #!/bin/bash
-$SPARK_HOME/sbin/start-slave.sh --host $1 --port $2
+echo $SPARK_HOME/sbin/start-slave.sh spark://$1:$2 --webui-port $3
+$SPARK_HOME/sbin/start-slave.sh spark://$1:$2 --webui-port $3
