@@ -29,6 +29,7 @@ ADD start-spark.sh /usr/local/bin/
 ADD start-master.sh /usr/local/bin/
 ADD start-worker.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start-spark.sh /usr/local/bin/start-master.sh /usr/local/bin/start-worker.sh 
+RUN pip3 install pandas numpy matplotlib ggplot 
 ENTRYPOINT ["/usr/local/bin/start-spark.sh"]
 
 # Install Jupyter notebooks.
